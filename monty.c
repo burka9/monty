@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		printf("USAGE: monty file\n");
+		print_stderr("USAGE: monty file\n");
 		return (1);
 	}
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
 	if (file == NULL)
 	{
-		printf("Error: Can't open file %s\n", file_name);
+		print_stderr("Error: Can't open file %s\n", file_name);
 		return (1);
 	}
 

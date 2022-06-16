@@ -16,7 +16,7 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 
 	if (code == NULL || arg == NULL)
 	{
-		printf("Error: malloc failed\n");
+		print_stderr("Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -65,7 +65,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 
 	if (opcodes == NULL)
 	{
-		printf("Error: malloc failed\n");
+		print_stderr("Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -84,7 +84,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 	}
 	if (opcodes[i].opcode == NULL)
 	{
-		printf("L%i: unknown instruction %s\n", line_number, code);
+		print_stderr("L%i: unknown instruction %s\n", line_number, code);
 		exit(EXIT_FAILURE);
 	}
 
