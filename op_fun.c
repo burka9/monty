@@ -1,5 +1,11 @@
 #include "monty.h"
 
+instruction_t opcodes[] = {
+	{"push", push},
+	{"pall", pall},
+	{NULL, NULL}
+};
+
 /**
  * pall - prints all the values in the stack
  * @stack: pointer to the top of the stack
@@ -47,4 +53,20 @@ void push(stack_t **stack, unsigned int line_number)
 		(*stack)->prev = new;
 		*stack = new;
 	}
+}
+
+instruction_t find_opcodes(char *str)
+{
+	instruction_t opcode;
+
+	for (int i = 0; opcodes[i].opcode != NULL; i++)
+	{
+		if (strcmp(opcodes[i].opcode, str) == 0)
+		{
+			opcode = opcodes[i];
+			return opcode;
+		}
+	}
+	opcode.opcode = NULL;
+	return opcode;
 }

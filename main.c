@@ -23,4 +23,17 @@ int main(int argc, char **argv)
 		printf("Error: Can't open file %s\n", file_name);
 		return (1);
 	}
+
+	stack_t *stack = NULL;
+	char *line;
+	int counter = 0;
+
+	while (fgets(line, MAX_BUFFER, file))
+	{
+		process_line(&stack, line, counter);
+		counter++;
+	}
+
+	fclose(file);
+	return (0);
 }
