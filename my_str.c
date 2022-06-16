@@ -2,7 +2,9 @@
 
 /**
  * process_line - processes a line of the file
+ * @stack: pointer to the top of the stack
  * @line: line of the file
+ * @line_number: line number of the instruction
  * Return: void
  */
 void process_line(stack_t **stack, char *line, unsigned int line_number)
@@ -29,10 +31,9 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 	}
 	while (i < strlen(line))
 	{
-		if (line[i] == ' ')
-			i++;
-		else
+		if (line[i] != ' ')
 			break;
+		i++;
 	}
 	for (int j = 0; i < strlen(line); i++)
 	{
@@ -52,12 +53,24 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 
 /**
  * execute - executes the opcode
+ * @stack: pointer to the top of the stack
  * @code: opcode
  * @arg: argument
+ * @line_number: line number of the instruction
  * Return: void
  */
 void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 {
+	instruction_t *opcodes = (instruction_t *)malloc(sizeof(instruction_t) * 3);
+
+	if (opcodes == NULL)
+	{
+		printf("Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+
+	set_opcodes(opcodes);
+
 	instruction_t opcode;
 	int i = 0;
 
@@ -74,7 +87,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 		printf("L%i: unknown instruction %s\n", line_number, code);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	opcode.f(stack, arg);
 }
 

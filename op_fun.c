@@ -1,10 +1,17 @@
 #include "monty.h"
 
-instruction_t opcodes[] = {
-	{"push", push},
-	{"pall", pall},
-	{NULL, NULL}
-};
+/**
+ * set_opcodes - sets the opcodes
+ * @opcodes: pointer to the opcodes
+ * Return: void
+ */
+void set_opcodes(instruction_t *opcodes)
+{
+	opcodes[0].opcode = "push";
+	opcodes[0].f = push;
+	opcodes[1].opcode = "pall";
+	opcodes[1].f = pall;
+}
 
 /**
  * pall - prints all the values in the stack
@@ -53,20 +60,4 @@ void push(stack_t **stack, unsigned int line_number)
 		(*stack)->prev = new;
 		*stack = new;
 	}
-}
-
-instruction_t find_opcodes(char *str)
-{
-	instruction_t opcode;
-
-	for (int i = 0; opcodes[i].opcode != NULL; i++)
-	{
-		if (strcmp(opcodes[i].opcode, str) == 0)
-		{
-			opcode = opcodes[i];
-			return opcode;
-		}
-	}
-	opcode.opcode = NULL;
-	return opcode;
 }
