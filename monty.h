@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include <ctype.h>
-#include <assert.h>
 
 #define MAX_BUFFER 1024
 
@@ -42,12 +42,15 @@ typedef struct instruction_s
 
 extern stack_t **stack;
 
+void print_stderr(char *s);
+
 void set_opcodes(instruction_t *opcodes);
 void pall(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number);
 
-char *split(char *str);
-char *trim(char *str);
+char *ltrim(char *s);
+char *rtrim(char *s);
+char *trim(char *s);
 
 void process_line(stack_t **stack, char *line, unsigned int line_number);
 void execute(stack_t **stack, char *opcode, int arg, unsigned int line_number);

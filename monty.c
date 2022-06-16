@@ -20,15 +20,16 @@ int main(int argc, char **argv)
 
 	if (file == NULL)
 	{
-		print_stderr("Error: Can't open file %s\n", file_name);
+		// print_stderr("Error: Can't open file %s\n", file_name);
+		fprintf(stderr, "Error: Can't open file %s\n", file_name);
 		return (1);
 	}
 
 	stack_t *stack = NULL;
-	char *line;
+	char *line = (char *)malloc(sizeof(char) * MAX_BUFFER);
 	int counter = 0;
 
-	while (fgets(line, MAX_BUFFER, file))
+	while (fgets(line, MAX_BUFFER-1, file))
 	{
 		process_line(&stack, line, counter);
 		counter++;

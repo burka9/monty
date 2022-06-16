@@ -20,7 +20,7 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	for (i = 0; i < strlen(line); i++)
+	for (i = 0; i < (int) strlen(line); i++)
 	{
 		if (line[i] == ' ')
 		{
@@ -29,13 +29,13 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 		}
 		code[i] = line[i];
 	}
-	while (i < strlen(line))
+	while (i < (int) strlen(line))
 	{
 		if (line[i] != ' ')
 			break;
 		i++;
 	}
-	for (int j = 0; i < strlen(line); i++)
+	for (int j = 0; i < (int) strlen(line); i++)
 	{
 		if (line[i] == ' ')
 		{
@@ -84,7 +84,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 	}
 	if (opcodes[i].opcode == NULL)
 	{
-		print_stderr("L%i: unknown instruction %s\n", line_number, code);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, code);
 		exit(EXIT_FAILURE);
 	}
 
