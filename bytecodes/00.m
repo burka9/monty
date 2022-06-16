@@ -1,4 +1,4 @@
-pall
-push 10
-push 20
+		  push 1 asd asdf
+push 2
+				push 3 push 5 pall
 pall
