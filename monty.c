@@ -9,25 +9,29 @@
  */
 int main(int argc, char **argv)
 {
+	int counter;
+	char * line, *file_name;
+	stack_t * stack;
+	FILE* file;
+	
 	if (argc != 2)
 	{
-		print_stderr("USAGE: monty file\n");
+		stderr_usage();
 		return (1);
 	}
 
-	char *file_name = argv[1];
-	FILE *file = fopen(file_name, "r");
+	file_name = argv[1];
+	file = fopen(file_name, "r");
 
 	if (file == NULL)
 	{
-		// print_stderr("Error: Can't open file %s\n", file_name);
-		fprintf(stderr, "Error: Can't open file %s\n", file_name);
+		stderr_fopen(file_name);
 		return (1);
 	}
 
-	stack_t *stack = NULL;
-	char *line = (char *)malloc(sizeof(char) * MAX_BUFFER);
-	int counter = 0;
+	stack = NULL;
+	line = (char *)malloc(sizeof(char) * MAX_BUFFER);
+	counter = 0;
 
 	while (fgets(line, MAX_BUFFER-1, file))
 	{

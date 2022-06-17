@@ -9,14 +9,18 @@
  */
 void process_line(stack_t **stack, char *line, unsigned int line_number)
 {
+	char *code, *arg;
+	int i, j, casted;
+
+	i = 0;
+	j = 0;
 	line = trim(line);
-	char *code = malloc(sizeof(char) * (strlen(line) + 1));
-	char *arg = malloc(sizeof(char) * (strlen(line) + 1));
-	int i = 0;
+	code = malloc(sizeof(char) * (strlen(line) + 1));
+	arg = malloc(sizeof(char) * (strlen(line) + 1));
 
 	if (code == NULL || arg == NULL)
 	{
-		print_stderr("Error: malloc failed\n");
+		stderr_malloc();
 		exit(EXIT_FAILURE);
 	}
 
@@ -35,7 +39,7 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 			break;
 		i++;
 	}
-	for (int j = 0; i < (int) strlen(line); i++)
+	for (j = 0; i < (int) strlen(line); i++)
 	{
 		if (line[i] == ' ')
 		{
@@ -46,9 +50,8 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 		j++;
 	}
 
-	int _arg = atoi(arg);
-
-	execute(stack, code, _arg, line_number);
+	casted = atoi(arg);
+	execute(stack, code, casted, line_number);
 }
 
 /**
@@ -61,18 +64,24 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
  */
 void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 {
-	instruction_t *opcodes = (instruction_t *)malloc(sizeof(instruction_t) * 3);
+	instruction_t *opcodes;
+	instruction_t opcode;
+	int i = 0;
+
+	opcodes = (instruction_t *)malloc(sizeof(instruction_t) * 3);
 
 	if (opcodes == NULL)
 	{
-		print_stderr("Error: malloc failed\n");
+		stderr_malloc();
 		exit(EXIT_FAILURE);
 	}
 
 	set_opcodes(opcodes);
 
-	instruction_t opcode;
-	int i = 0;
+	if (strcmp(code, "pall") != 0 && arg == 0) {
+		stderr_int(line_number);
+		exit(EXIT_FAILURE);
+	}
 
 	for (i = 0; opcodes[i].opcode != NULL; i++)
 	{
@@ -84,7 +93,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 	}
 	if (opcodes[i].opcode == NULL)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, code);
+		stderr_unknown(code, line_number);
 		exit(EXIT_FAILURE);
 	}
 

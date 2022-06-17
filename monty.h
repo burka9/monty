@@ -42,7 +42,11 @@ typedef struct instruction_s
 
 extern stack_t **stack;
 
-void print_stderr(char *s);
+void stderr_usage(void);
+void stderr_malloc(void);
+void stderr_fopen(char *fd);
+void stderr_int(unsigned int line_number);
+void stderr_unknown(char *token, unsigned int line_number);
 
 void set_opcodes(instruction_t *opcodes);
 void pall(stack_t **stack, unsigned int line_number);

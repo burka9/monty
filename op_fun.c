@@ -21,8 +21,10 @@ void set_opcodes(instruction_t *opcodes)
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
+	stack_t *temp;
 	(void)line_number;
-	stack_t *temp = *stack;
+	
+	temp = (*stack);
 
 	while (temp != NULL)
 	{
@@ -39,11 +41,13 @@ void pall(stack_t **stack, unsigned int line_number)
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *new = malloc(sizeof(stack_t));
+	stack_t *new;
+
+	new = malloc(sizeof(stack_t));
 
 	if (new == NULL)
 	{
-		print_stderr("Error: malloc failed\n");
+		stderr_malloc();
 		exit(EXIT_FAILURE);
 	}
 	new->n = line_number;
