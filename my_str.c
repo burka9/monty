@@ -18,12 +18,13 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 	code = malloc(sizeof(char) * (strlen(line) + 1));
 	arg = malloc(sizeof(char) * (strlen(line) + 1));
 
+	if (strlen(line) == 0)
+		return;
 	if (code == NULL || arg == NULL)
 	{
 		stderr_malloc();
 		exit(EXIT_FAILURE);
 	}
-
 	for (i = 0; i < (int)strlen(line); i++)
 	{
 		if (line[i] == ' ')
@@ -44,9 +45,7 @@ void process_line(stack_t **stack, char *line, unsigned int line_number)
 		arg[j] = line[i];
 		j++;
 	}
-
 	arg[j] = '\0';
-
 	casted = atoi(arg);
 	execute(stack, code, casted, line_number);
 }
@@ -65,7 +64,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 	instruction_t opcode;
 	int i = 0;
 
-	opcodes = (instruction_t *)malloc(sizeof(instruction_t) * 4);
+	opcodes = (instruction_t *)malloc(sizeof(instruction_t) * OPCODE_COUNT);
 
 	if (opcodes == NULL)
 	{
@@ -75,7 +74,7 @@ void execute(stack_t **stack, char *code, int arg, unsigned int line_number)
 
 	set_opcodes(opcodes);
 
-	if (strcmp(code, "pall") != 0 && arg == 0)
+	if (strcmp(code, "push") == 0 && arg == 0)
 	{
 		stderr_int(line_number);
 		exit(EXIT_FAILURE);

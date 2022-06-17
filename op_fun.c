@@ -13,6 +13,8 @@ void set_opcodes(instruction_t *opcodes)
 	opcodes[1].f = pall;
 	opcodes[2].opcode = "pint";
 	opcodes[2].f = pint;
+	opcodes[3].opcode = "swap";
+	opcodes[3].f = swap;
 }
 
 /**
@@ -84,5 +86,31 @@ void pint(stack_t **stack, unsigned int line_number)
 	else
 	{
 		printf("%d\n", (*stack)->n);
+	}
+}
+
+/**
+ * pop - removes the top of the stack
+ * @stack: pointer to the top of the stack
+ * @line_number: line number of the instruction
+ * Return: void
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL)
+	{
+		stderr_pop_empty(line_number);
+	}
+	else
+	{
+		temp = *stack;
+		*stack = (*stack)->next;
+		if (*stack != NULL)
+		{
+			(*stack)->prev = NULL;
+		}
+		free(temp);
 	}
 }
