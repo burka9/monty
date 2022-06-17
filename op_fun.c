@@ -11,6 +11,8 @@ void set_opcodes(instruction_t *opcodes)
 	opcodes[0].f = push;
 	opcodes[1].opcode = "pall";
 	opcodes[1].f = pall;
+	opcodes[2].opcode = "pint";
+	opcodes[2].f = pint;
 }
 
 /**
@@ -23,7 +25,7 @@ void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
 	(void)line_number;
-	
+
 	temp = (*stack);
 
 	while (temp != NULL)
@@ -64,5 +66,23 @@ void push(stack_t **stack, unsigned int line_number)
 		new->prev = NULL;
 		(*stack)->prev = new;
 		*stack = new;
+	}
+}
+
+/**
+ * pint - prints the top of the stack
+ * @stack: pointer to the top of the stack
+ * @line_number: line number of the instruction
+ * Return: void
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if ((*stack) == NULL)
+	{
+		stderr_empty(line_number);
+	}
+	else
+	{
+		printf("%d\n", (*stack)->n);
 	}
 }

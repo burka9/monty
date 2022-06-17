@@ -47,10 +47,12 @@ void stderr_malloc(void);
 void stderr_fopen(char *fd);
 void stderr_int(unsigned int line_number);
 void stderr_unknown(char *token, unsigned int line_number);
+void stderr_empty(unsigned int line_number);
 
 void set_opcodes(instruction_t *opcodes);
 void pall(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 
 char *ltrim(char *s);
 char *rtrim(char *s);

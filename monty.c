@@ -10,10 +10,11 @@
 int main(int argc, char **argv)
 {
 	int counter;
-	char * line, *file_name;
-	stack_t * stack;
-	FILE* file;
-	
+	char *line;
+	char *file_name;
+	stack_t *stack;
+	FILE *file;
+
 	if (argc != 2)
 	{
 		stderr_usage();
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
 	line = (char *)malloc(sizeof(char) * MAX_BUFFER);
 	counter = 0;
 
-	while (fgets(line, MAX_BUFFER-1, file))
+	while (fgets(line, MAX_BUFFER - 1, file))
 	{
 		process_line(&stack, line, counter);
 		counter++;
