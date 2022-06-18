@@ -1,45 +1,44 @@
 #include "monty.h"
 
 /**
- * main - main function
- * @argc: number of arguments
- * @argv: arguments
+ * main - entry into interpreter
+ * @argc: argc counter
+ * @argv: argument vector
  * Return: 0 on success
- *	1 on failure
  */
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-	int counter;
-	char *line;
-	char *file_name;
-	stack_t *stack;
-	FILE *file;
+	FILE *fp = NULL;
+	char *buffer = NULL, *str = NULL;
+	size_t s = 0;
+	unsigned int line_number = 1;
+	stack_t *stack = NULL;
+
 
 	if (argc != 2)
 	{
-		stderr_usage();
-		return (1);
+		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
 	}
 
-	file_name = argv[1];
-	file = fopen(file_name, "r");
-
-	if (file == NULL)
+	fp = fopen(argv[1], "r");
+	if (!fp)
 	{
-		stderr_fopen(file_name);
-		return (1);
+		dprintf(STDERR_FILENO, "Error: Can't open this file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
 	}
-
-	stack = NULL;
-	line = (char *)malloc(sizeof(char) * MAX_BUFFER);
-	counter = 0;
-
-	while (fgets(line, MAX_BUFFER - 1, file))
+	while (getline(&buffer, &s, fp) != -1)
 	{
-		process_line(&stack, line, counter);
-		counter++;
+		if (*buffer != '\n')
+		{
+			str = strtok(buffer, "\n");
+			tokenizer(str, &stack, line_number);
+		}
+		line_number++;
 	}
-
-	fclose(file);
+	fclose(fp);
+	free(buffer);
+	if (stack != NULL)
+		free_stack(&stack, line_number);
 	return (0);
 }
